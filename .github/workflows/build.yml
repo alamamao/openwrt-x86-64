@@ -8,9 +8,9 @@ on:
       - ".github/workflows/build.yml"
 
 env:
-  FIRMWARE_URL: "https://downloads.openwrt.org/releases/19.07.2/targets/x86/64/openwrt-19.07.2-x86-64-generic-rootfs.tar.gz"
+  FIRMWARE_URL: "https://github.com/haiibo/OpenWrt/releases/download/X86_64/openwrt-x86-64-generic-rootfs.tar.gz"
   REPOSITORY: crazygit/openwrt-x86-64
-  TAG: 19.07.2
+  TAG: latest
 
 jobs:
   build:
