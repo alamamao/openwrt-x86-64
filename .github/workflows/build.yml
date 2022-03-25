@@ -1,11 +1,13 @@
 name: Build OpenWrt Docker x86-64 image
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - ".github/workflows/build.yml"
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
 
 env:
   FIRMWARE_URL: "https://github.com/haiibo/OpenWrt/releases/download/X86_64/openwrt-x86-64-generic-rootfs.tar.gz"
