@@ -29,10 +29,22 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
-          FIRMWARE: openwrt.tar.gz
+          FIRMWARE: openwrt.tar.gz 
         with:
           name: ${{ env.REPOSITORY }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
           buildargs: FIRMWARE
           tags: "latest,${{ env.TAG }}"
+      - name: Organize files  
+        id: organize
+        if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+        run: |
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=status::success"
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@main
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+         path: ${{ env.FIRMWARE }}
